@@ -17,6 +17,7 @@
       if (window.File && window.FileList && window.FileReader) {
         if (typeof($(settings.input_field)) !== 'undefined' && $(settings.input_field) !== null) {
           $(settings.input_field).change(function() {
+            var input = this;
             var files = this.files;
 
             if (files.length > 0) {
@@ -26,16 +27,15 @@
               // Load file
               reader.addEventListener("load",function(event) {
                 var loadedFile = event.target;
-
                 // Check format
                 if (file.type.match('image')) {
                   // Image
-                  $(settings.preview_box).css("background-image", "url("+loadedFile.result+")");
-                  $(settings.preview_box).css("background-size", "cover");
-                  $(settings.preview_box).css("background-position", "center center");
+                  $(input).closest(settings.preview_box).css("background-image", "url("+loadedFile.result+")");
+                  $(input).closest(settings.preview_box).css("background-size", "cover");
+                  $(input).closest(settings.preview_box).css("background-position", "center center");
                 } else if (file.type.match('audio')) {
                   // Audio
-                  $(settings.preview_box).html("<audio controls><source src='" + loadedFile.result + "' type='" + file.type + "' />Your browser does not support the audio element.</audio>");
+                  $(input).closest(settings.preview_box).html("<audio controls><source src='" + loadedFile.result + "' type='" + file.type + "' />Your browser does not support the audio element.</audio>");
                 } else {
                   alert("This file type is not supported yet.");
                 }
@@ -43,7 +43,7 @@
 
               if (settings.no_label == false) {
                 // Change label
-                $(settings.label_field).html(settings.label_selected);
+                $(this).parent().find(settings.label_field).html(settings.label_selected);
               }
 
               // Read the file
@@ -56,14 +56,14 @@
             } else {
               if (settings.no_label == false) {
                 // Change label
-                $(settings.label_field).html(settings.label_default);
+                $(this).parent().find(settings.label_field).html(settings.label_default);
               }
 
               // Clear background
-              $(settings.preview_box).css("background-image", "none");
+              $(input).closest(settings.preview_box).css("background-image", "none");
 
               // Remove Audio
-              $(settings.preview_box + " audio").remove();
+              $(input).closest(settings.preview_box + " audio").remove();
             }
           });
         }
