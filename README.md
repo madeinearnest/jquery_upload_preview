@@ -1,5 +1,7 @@
 # Upload Preview jQuery Plugin
 
+with the added bonus of multiple uploadable files
+
 ## What is that?
 
 This jQuery plugin provides an easy way to preview your uploads before they're actually uploaded to the server. So if you selected an image or audio file from your hard drive, it will generate a live preview of the selected image or audio player for the audio file.
